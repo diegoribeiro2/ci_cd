@@ -2,10 +2,6 @@ name: CD
 
 # Controla quando o fluxo de trabalho será executado
 on:
-  # Aciona o fluxo de trabalho ao fazer push ou pull request para a branch master
-  # push:
-  #   branches: [ "master" ]
-
   # Permite executar este fluxo de trabalho manualmente na guia Actions
   workflow_dispatch:
 
@@ -39,7 +35,7 @@ jobs:
 
       # Verifica a estrutura do repositório para garantir que o Dockerfile esteja no caminho correto
       - name: see structure
-        run: ls -la
+        run: ls -la ci_cd/exemplos/
 
       # Passo de construção e publicação da imagem Docker
       - name: Construir e publicar imagem Docker
