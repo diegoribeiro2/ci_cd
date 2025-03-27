@@ -10,10 +10,7 @@ on:
 jobs:
   deploy_docker_image:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-      # Diretório de trabalho da pasta ci_cd.
-        working-directory: ci_cd
+   
     steps:
       - name: Checkout
         uses: actions/checkout@v3
