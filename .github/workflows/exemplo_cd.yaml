@@ -34,7 +34,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: see structure
-        run: ls -la ci_cd/exemplos  # Verifica se o Dockerfile está na pasta ci_cd/exemplos
+        run: ls -la ci_cd/exemplos/  # Verifica se o Dockerfile está na pasta ci_cd/exemplos
 
       - name: Construir e publicar imagem Docker
         uses: docker/build-push-action@v2
