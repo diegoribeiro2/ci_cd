@@ -2,9 +2,11 @@ name: CD
 
 # Controls when the workflow will run
 on:
-#   push:
-#     branches: [ "master" ]
+  # Aciona o fluxo de trabalho ao fazer push ou pull request para a branch master
+  # push:
+  #   branches: [ "master" ]
 
+  # Permite executar este fluxo de trabalho manualmente na guia Actions
   workflow_dispatch:
 
 jobs:
@@ -20,12 +22,11 @@ jobs:
         with:
           filters: |
             CI_CD:
-              - 'ci_cd/**' 
+              - 'ci_cd/**'
 
       - name: Login no Docker Hub
         uses: docker/login-action@v1
         with:
-        # Nota -> https://docs.docker.com/security/for-developers/access-tokens/ para mais informações
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
@@ -33,11 +34,12 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: see structure
-        run: ls -la
+        run: ls -la ci_cd/exemplos  # Verifica se o Dockerfile está na pasta ci_cd/exemplos
 
       - name: Construir e publicar imagem Docker
         uses: docker/build-push-action@v2
         with:
-          file: ci_cd/exemplos/Dockerfile
+          context: ci_cd  # Define o contexto como a pasta ci_cd
+          file: ci_cd/exemplos/Dockerfile  # Caminho para o Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest
