@@ -47,6 +47,8 @@ jobs:
 
       - name: lint
         run: just lint
+        shell: bash
 
       - name: testes
         run: just teste
+        shell: bash
