@@ -1,20 +1,24 @@
 name: CD
 
-# Controls when the workflow will run
+# Controla quando o fluxo de trabalho será executado
 on:
-#   push:
-#     branches: [ "master" ]
+  # Aciona o fluxo de trabalho ao fazer push ou pull request para a branch master
+  # push:
+  #   branches: [ "master" ]
 
+  # Permite executar este fluxo de trabalho manualmente na guia Actions
   workflow_dispatch:
 
 jobs:
   deploy_docker_image:
-    runs-on: ubuntu-latest
-  
+    runs-on: ubuntu-latest  # Define o runner para Ubuntu
+
     steps:
+      # Faz o checkout do repositório para o ambiente do GitHub Actions
       - name: Checkout
         uses: actions/checkout@v3
-      
+
+      # Filtro para garantir que a pasta CI_CD será monitorada
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -22,22 +26,26 @@ jobs:
             CI_CD:
               - 'ci_cd/**' 
 
+      # Realiza o login no Docker Hub usando as credenciais armazenadas nos secrets do GitHub
       - name: Login no Docker Hub
         uses: docker/login-action@v1
         with:
-        # Nota -> https://docs.docker.com/security/for-developers/access-tokens/ para mais informações
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}  # Nome de usuário no Docker Hub
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}  # Token de acesso ao Docker Hub
 
+      # Configura o Docker Buildx, que é necessário para a construção da imagem Docker
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      # Verifica a estrutura do repositório para garantir que o Dockerfile esteja no caminho correto
       - name: see structure
         run: ls -la
 
+      # Passo de construção e publicação da imagem Docker
       - name: Construir e publicar imagem Docker
         uses: docker/build-push-action@v2
         with:
-          file: ci_cd/exemplos/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest
+          context: .  # Define o contexto como a raiz do repositório (onde o Docker buscará os arquivos)
+          file: ci_cd/exemplos/Dockerfile  # Caminho para o Dockerfile
+          push: true  # Define que a imagem será enviada para o Docker Hub
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest  # Tag para a imagem publicada
