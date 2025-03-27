@@ -18,10 +18,7 @@ jobs:
   
     # O tipo de runner em que o job será executado
     runs-on: ubuntu-latest
-    defaults:
-      run:
-      # Diretório de trabalho da pasta ci_cd.
-        working-directory: ci_cd
+
 
     # Os steps representam uma sequência de tarefas que serão executadas como parte do job
     steps:
