@@ -12,10 +12,7 @@ on:
 jobs:
   deploy_docker_image:
     runs-on: ubuntu-latest  # Define o runner para Ubuntu
-    defaults:
-      run:
-      # Diretório de trabalho da pasta ci_cd.
-        working-directory: ci_cd
+
     steps:
       # Faz o checkout do repositório para o ambiente do GitHub Actions
       - name: Checkout
@@ -42,13 +39,13 @@ jobs:
 
       # Verifica a estrutura do repositório para garantir que o Dockerfile esteja no caminho correto
       - name: see structure
-        run: ls -la
+        run: ls -la ci_cd/exemplos/
 
       # Passo de construção e publicação da imagem Docker
       - name: Construir e publicar imagem Docker
         uses: docker/build-push-action@v2
         with:
-          context: .  # Define o contexto como a raiz do repositório (onde o Docker buscará os arquivos)
+          context: ci_cd  # Define o contexto para 'ci_cd' e não '.'
           file: ci_cd/exemplos/Dockerfile  # Caminho para o Dockerfile
           push: true  # Define que a imagem será enviada para o Docker Hub
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest  # Tag para a imagem publicada
