@@ -37,7 +37,7 @@ jobs:
       - name: Instalar Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.8.5
+          version: 2.1.1
         
       - name: Instalar Just
         uses: extractions/setup-just@v1
