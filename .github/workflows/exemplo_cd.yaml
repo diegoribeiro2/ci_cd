@@ -34,10 +34,6 @@ jobs:
       # Adicione isto para ver a estrutura da pasta e verificar se o Dockerfile está presente  
       - name: List ci_cd contents  
         run: ls -la ci_cd  # <-- **Aqui está a alteração recomendada**  
-      
-      # Comente ou remova o passo de filtro, ou adicione uma verificação depois dele  
-      # Para depuração, você pode verificar se o filtro está funcionando:  
-      - name: Check CI_CD Filter  
     
 
       - name: Construir e publicar imagem Docker  
