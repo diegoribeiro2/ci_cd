@@ -38,7 +38,6 @@ jobs:
       # Comente ou remova o passo de filtro, ou adicione uma verificação depois dele  
       # Para depuração, você pode verificar se o filtro está funcionando:  
       - name: Check CI_CD Filter  
-        run: echo "Filtered: ${{ steps.filter.outputs.CI_CD }}"  # <-- **Esta linha é opcional, mas pode ajudar na depuração**  
 
       - name: Construir e publicar imagem Docker  
         uses: docker/build-push-action@v2  
