@@ -36,10 +36,9 @@ jobs:
         run: ls -la 
     
 
-      - name: Construir e publicar imagem Docker  
-        uses: docker/build-push-action@v2  
-        with:  
-          context: ./ci_cd             # Contexto correto  
-          file: ci_cd/Dockerfile       # Caminho do Dockerfile alterado corretamente  
-          push: true  
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest  
+      - name: Construir e publicar imagem Docker
+        uses: docker/build-push-action@v2
+        with:
+          file: ci_cd/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest
