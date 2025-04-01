@@ -1,0 +1,49 @@
+name: CD  
+
+# Controls when the workflow will run  
+on:  
+#   push:  
+#     branches: [ "master" ]  
+
+  workflow_dispatch:  
+
+jobs:  
+  deploy_docker_image:  
+    runs-on: ubuntu-latest  
+    
+    steps:  
+      - name: Checkout  
+        uses: actions/checkout@v3  
+      
+      - uses: dorny/paths-filter@v2  
+        id: filter  
+        with:  
+          filters: |  
+            CI_CD:  
+              - 'ci_cd/**'   
+
+      - name: Login no Docker Hub  
+        uses: docker/login-action@v1  
+        with:  
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}  
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}  
+
+      - name: Setup Docker Buildx  
+        uses: docker/setup-buildx-action@v1  
+
+      # Adicione isto para ver a estrutura da pasta e verificar se o Dockerfile está presente  
+      - name: List ci_cd contents  
+        run: ls -la ci_cd  # <-- **Aqui está a alteração recomendada**  
+      
+      # Comente ou remova o passo de filtro, ou adicione uma verificação depois dele  
+      # Para depuração, você pode verificar se o filtro está funcionando:  
+      - name: Check CI_CD Filter  
+        run: echo "Filtered: ${{ steps.filter.outputs.CI_CD }}"  # <-- **Esta linha é opcional, mas pode ajudar na depuração**  
+
+      - name: Construir e publicar imagem Docker  
+        uses: docker/build-push-action@v2  
+        with:  
+          context: ./ci_cd             # Contexto correto  
+          file: ci_cd/Dockerfile       # Caminho do Dockerfile alterado corretamente  
+          push: true  
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest  
