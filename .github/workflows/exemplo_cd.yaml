@@ -38,6 +38,6 @@ jobs:
       - name: Construir e publicar imagem Docker
         uses: docker/build-push-action@v2
         with:
-          file: ci_cd/exemplos/Dockerfile
+          file: ci_cd/Dockerfile  
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/curso:latest
