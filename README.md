@@ -8,6 +8,7 @@ Este repositório utiliza **GitHub Actions** para automatizar os processos de **
 O CI garante que o código está sempre funcionando corretamente ao rodar testes automaticamente a cada mudança no repositório.
 
 No **GitHub Actions**, um workflow de CI normalmente faz:
+
 ✅ **Checkout do código** (pegar a versão mais recente do repositório).  
 ✅ **Rodar linter e formatador** (garante que o código segue um padrão, ex: `black`, `flake8`).  
 ✅ **Executar testes automatizados** (testa se tudo está funcionando, ex: `pytest`).  
@@ -28,6 +29,7 @@ No projeto de **Machine Learning**, o CI pode ser usado para:
 O CD automatiza a implantação do código para um ambiente de produção sempre que uma nova versão está pronta.
 
 No **GitHub Actions**, um workflow de CD normalmente faz:
+
 ✅ **Build da aplicação** (constrói a imagem Docker).  
 ✅ **Login no Docker Hub** (para subir a imagem).  
 ✅ **Publicação da imagem Docker** (envia para o repositório Docker Hub).  
